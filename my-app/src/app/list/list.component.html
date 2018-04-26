@@ -1,0 +1,26 @@
+<h1>User List </h1>
+<!-- <div class="grid grid-pad">
+  <a *ngFor="let user of users" class="col-1-4"
+      routerLink="/detail/{{user.id}}">
+    <div class="module hero">
+      <h4>{{user.name}}</h4>
+    </div>
+  </a>
+</div> -->
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>
+        <a routerLink="/detail/{{user.id}}">{{user.name}}</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
