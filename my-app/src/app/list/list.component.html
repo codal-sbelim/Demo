@@ -1,4 +1,4 @@
-<h1>User List </h1>
+<h1 style="text-align:center">User List </h1>
 <!-- <div class="grid grid-pad">
   <a *ngFor="let user of users" class="col-1-4"
       routerLink="/detail/{{user.id}}">
@@ -13,13 +13,24 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th>Email</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let user of users; index as i">
       <th scope="row">{{i+1}}</th>
       <td>
-        <a routerLink="/detail/{{user.id}}">{{user.name}}</a>
+        <a routerLink="/detail/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+      </td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button type="button" class="btn btn-primary">
+          <fa [name]="'pencil-square-o'"></fa> Edit
+        </button>
+        <button type="button" class="btn btn-danger">
+          <fa [name]="'trash-o'"></fa>Delete
+        </button>
       </td>
     </tr>
   </tbody>

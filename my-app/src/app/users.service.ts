@@ -15,5 +15,11 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl);
   }
+  
+  /** GET user by id. Will 404 if id not found */
+  getUser(id: number): Observable<User> {
+    const url = `${this.userUrl}/${id}`;
+    return this.http.get<User>(url);
+  }
 
 }

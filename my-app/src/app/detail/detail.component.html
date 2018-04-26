@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row" *ngIf=user>
   <div class="col-xs-12 toppad">
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title">Sheena Shrestha</h3>
+        <h3 class="panel-title">{{user.first_name}} {{user.last_name}}</h3>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -14,26 +14,26 @@
                   <td>Programming</td>
                 </tr>
                 <tr>
-                  <td>Hire date:</td>
-                  <td>06/23/2013</td>
-                </tr>
-                <tr>
-                  <td>Date of Birth</td>
-                  <td>01/24/1988</td>
-                </tr>
-                <tr>
-                  <td>Gender</td>
-                  <td>Female</td>
-                </tr>
-                <tr>
-                  <td>Home Address</td>
-                  <td>Kathmandu,Nepal</td>
+                  <td>Date of Birth:</td>
+                  <td>{{user.dob}}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
                   <td>
-                    <a href="mailto:info@support.com">info@support.com</a>
+                    <a href="mailto:info@support.com"> {{user.email}} </a>
                   </td>
+                </tr>
+                <tr>
+                  <td>Department</td>
+                  <td>{{user.department}}</td>
+                </tr>
+                <tr>
+                  <td>Gender</td>
+                  <td>{{user.gender}}</td>
+                </tr>
+                <tr>
+                  <td>Home Address</td>
+                  <td>{{user.address}}</td>
                 </tr>
               </tbody>
             </table>
