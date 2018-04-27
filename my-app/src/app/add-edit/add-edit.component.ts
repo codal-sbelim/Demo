@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../users.service';
 import { User, states, customNotificationOptions } from '../user';
 import { NotificationsService } from 'angular2-notifications';
-
+import { NgProgress } from '@ngx-progressbar/core';
 let id;
 const now = new Date();
 
@@ -27,13 +27,15 @@ export class AddEditComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private fb: FormBuilder,
-    private _notifications: NotificationsService
+    private _notifications: NotificationsService,
+    public progress: NgProgress
   ) { }
 
   ngOnInit() {
+    this.progress.start();
     id = parseInt(this.route.snapshot.paramMap.get('id'));
     if (id) this.getUser();
-    else this.isLoaded = true;
+    else { this.isLoaded = true; this.progress.complete(); }
     this.createForm();
   }
 
@@ -61,6 +63,8 @@ export class AddEditComponent implements OnInit {
         this.user = user;
         let dob = this.user.dob.split('-') // Date format: YYYY-MM-DD
         console.log("User Info : ", user, dob);
+
+        // Bind user info with form controls on edit
         this.userForm.setValue({
           first_name: this.user.first_name, // Required fields
           last_name: this.user.last_name, // Required fields
@@ -72,6 +76,7 @@ export class AddEditComponent implements OnInit {
           isAgree: this.user.isAgree || false, // Optional fields
           dob: { year: parseInt(dob[0]), month: parseInt(dob[1]) + 1, day: parseInt(dob[2]) } || '' // Optional fields
         });
+        this.progress.complete();
       })
   }
 

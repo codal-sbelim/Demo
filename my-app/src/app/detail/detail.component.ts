@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../user';
 import { UserService } from '../users.service';
+import { NgProgress } from '@ngx-progressbar/core';
 
 @Component({
   selector: 'app-detail',
@@ -12,26 +13,26 @@ export class DetailComponent implements OnInit {
   user: User;
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    public progress: NgProgress
   ) {
   }
 
   ngOnInit() {
+    this.progress.start();
     this.getUser();
   }
 
   getUser(): void {
     /* Get route params */
-    const id = parseInt(this.route.snapshot.paramMap.get('id')) ;
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
     const url = this.route.snapshot.url.join('/');
-    console.log("Id: --- ", id);
-    console.log("this.route : --- ", this.route);
 
     // Get user info by Id
     this.userService.getUser(id)
       .subscribe(user => {
         this.user = user;
-        console.log("User: ", user);
-      })
+        this.progress.complete();
+      });
   }
 }

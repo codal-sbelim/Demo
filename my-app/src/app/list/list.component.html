@@ -1,32 +1,30 @@
-<div class="py-5">
-  <button routerLink="/add" type="button" class="btn btn-primary pull-right" style="margin-bottom: 10px;">
-    <fa [name]="'plus'"></fa> Add New User
-  </button>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th>Email</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users; index as i">
-        <th scope="row">{{i+1}}</th>
-        <td>
-          <a routerLink="/detail/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
-        </td>
-        <td>{{ user.email }}</td>
-        <td>
-          <button routerLink="/edit/{{user.id}}" type="button" class="btn btn-primary">
+<div class="py-5" *ngIf="users.length > 0">
+    <button routerLink="/add" type="button" class="btn btn-primary pull-right" style="margin-bottom: 10px;"><fa [name]="'plus'"></fa> Add New User</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>
+                    <a routerLink="/detail/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <button routerLink="/edit/{{user.id}}" type="button" class="btn btn-primary">
             <fa [name]="'pencil-square-o'"></fa> Edit
           </button>
-          <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger">
             <fa [name]="'trash-o'"></fa>Delete
           </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

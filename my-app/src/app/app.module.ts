@@ -12,6 +12,7 @@ import { InMemUsersService } from './in-memory-data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NgProgressModule } from '@ngx-progressbar/core';
 
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import { AddEditComponent } from './add-edit/add-edit.component';
       InMemUsersService, { dataEncapsulation: false }
     ),
     Angular2FontawesomeModule,
-    SimpleNotificationsModule.forRoot({ position: ['top', 'right'] })
+    SimpleNotificationsModule.forRoot({ position: ['top', 'right'] }),
+    NgProgressModule.forRoot()
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
