@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../users.service';
-import { User, states } from '../user';
+import { User, states, customNotificationOptions } from '../user';
 import { NotificationsService } from 'angular2-notifications';
 
 let id;
@@ -19,6 +19,8 @@ export class AddEditComponent implements OnInit {
   user: User;
   userForm: FormGroup;
   states = states;
+  isLoaded: boolean = false;
+  customOptions = customNotificationOptions;
 
   constructor(
     private router: Router,
@@ -29,10 +31,13 @@ export class AddEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUser();
+    id = parseInt(this.route.snapshot.paramMap.get('id'));
+    if (id) this.getUser();
+    else this.isLoaded = true;
     this.createForm();
   }
 
+  // Create reactive form for add/edit user screen using Form Builder
   createForm() {
     this.userForm = this.fb.group({
       first_name: ['', [Validators.required, Validators.minLength(4)]],
@@ -45,15 +50,17 @@ export class AddEditComponent implements OnInit {
       isAgree: false,
       dob: ''
     })
+    console.log("this.userForm.value : ", this.userForm.status)
   }
 
+  // Get user info by id for edit screen
   getUser(): void {
-    id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.userService.getUser(id)
       .subscribe(user => {
+        this.isLoaded = true;
         this.user = user;
-        let dob = this.user.dob.split('/') // Date format: MM-DD-YYYY
-        console.log("User Info : ", user);
+        let dob = this.user.dob.split('-') // Date format: YYYY-MM-DD
+        console.log("User Info : ", user, dob);
         this.userForm.setValue({
           first_name: this.user.first_name, // Required fields
           last_name: this.user.last_name, // Required fields
@@ -63,25 +70,31 @@ export class AddEditComponent implements OnInit {
           department: this.user.department || '', //Optional fields
           state: this.user.state || this.states[0], // Optional fields
           isAgree: this.user.isAgree || false, // Optional fields
-          dob: { year: parseInt(dob[2]), month: parseInt(dob[0]) + 1, day: parseInt(dob[1]) } || '' // Optional fields
+          dob: { year: parseInt(dob[0]), month: parseInt(dob[1]) + 1, day: parseInt(dob[2]) } || '' // Optional fields
         });
-        console.log("this.userForm.value : ", )
       })
   }
 
   onSubmit() {
-    let updatedUserData = this.userForm.value;
-    updatedUserData.id = id;
-    updatedUserData.dob = Object.values(this.userForm.value.dob).join('/');
-    this.userService.updateUser(this.userForm.value)
-      .subscribe(() => {
-        this._notifications.success("User updated successfully.", "", {
-          timeOut: 1000,
-          showProgressBar: true,
-          pauseOnHover: true,
-          clickToClose: true
-        });
-        this.router.navigate(['list']);
-      })
+    let userData = this.userForm.value;
+    userData.id = id;
+    userData.dob = Object.values(this.userForm.value.dob).join('-');
+    console.log(userData)
+
+    if (id) {
+      // If edit mode : Update user
+      this.userService.updateUser(userData)
+        .subscribe(() => {
+          this._notifications.success("User updated successfully.", "", this.customOptions);
+          this.router.navigate(['list']);
+        })
+    } else {
+      // Add new user
+      this.userService.addUser(userData)
+        .subscribe(() => {
+          this._notifications.success("User addedd successfully.", "", this.customOptions);
+          this.router.navigate(['list']);
+        })
+    }
   }
 }

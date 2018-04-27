@@ -1,4 +1,4 @@
-<div class="col-md-6 offset-md-3 py-5" *ngIf="user">
+<div class="col-md-6 offset-md-3 py-5" *ngIf="isLoaded">
     <span class="anchor" id="formLogin"></span>
 
     <!-- form card login with validation feedback -->
@@ -79,12 +79,11 @@
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
                         <input type="reset" class="btn btn-secondary" routerLink="/list" value="Cancel">
-                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                        <button type="submit" class="btn btn-primary" value="Save Changes" [disabled]="!userForm.valid">Save Changes</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <!-- /form user info -->
-
 </div>

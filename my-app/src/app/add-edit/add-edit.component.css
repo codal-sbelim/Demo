@@ -1,3 +1,9 @@
 input.ng-invalid {
     border: 1px solid #dc3545;
 }
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] {
+    cursor: not-allowed;
+}

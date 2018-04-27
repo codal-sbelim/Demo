@@ -12,3 +12,10 @@ export class User {
 }
 
 export const states = ['CA', 'MD', 'OH', 'VA'];
+
+export const customNotificationOptions = {
+    timeOut: 1000,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true
+  }
