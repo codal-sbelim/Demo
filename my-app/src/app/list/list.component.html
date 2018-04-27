@@ -1,37 +1,32 @@
-<h1 style="text-align:center">User List </h1>
-<!-- <div class="grid grid-pad">
-  <a *ngFor="let user of users" class="col-1-4"
-      routerLink="/detail/{{user.id}}">
-    <div class="module hero">
-      <h4>{{user.name}}</h4>
-    </div>
-  </a>
-</div> -->
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th>Email</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users; index as i">
-      <th scope="row">{{i+1}}</th>
-      <td>
-        <a routerLink="/detail/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
-      </td>
-      <td>{{ user.email }}</td>
-      <td>
-        <button type="button" class="btn btn-primary">
-          <fa [name]="'pencil-square-o'"></fa> Edit
-        </button>
-        <button type="button" class="btn btn-danger">
-          <fa [name]="'trash-o'"></fa>Delete
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="py-5">
+  <button routerLink="/add" type="button" class="btn btn-primary pull-right" style="margin-bottom: 10px;">
+    <fa [name]="'plus'"></fa> Add New User
+  </button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>
+          <a routerLink="/detail/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+        </td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button routerLink="/edit/{{user.id}}" type="button" class="btn btn-primary">
+            <fa [name]="'pencil-square-o'"></fa> Edit
+          </button>
+          <button type="button" class="btn btn-danger">
+            <fa [name]="'trash-o'"></fa>Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

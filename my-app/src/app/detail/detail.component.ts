@@ -27,7 +27,7 @@ export class DetailComponent implements OnInit {
     console.log("Id: --- ", id);
     console.log("this.route : --- ", this.route);
 
-    //this.userService.get()
+    // Get user info by Id
     this.userService.getUser(id)
       .subscribe(user => {
         this.user = user;
