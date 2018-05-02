@@ -1,4 +1,4 @@
-<div class="py-5" *ngIf="users.length > 0">
+<div class="py-5" *ngIf="!loading">
     <button routerLink="/add" type="button" class="btn btn-primary pull-right" style="margin-bottom: 10px;"><fa [name]="'plus'"></fa> Add New User</button>
     <table class="table table-striped">
         <thead>
@@ -10,6 +10,9 @@
             </tr>
         </thead>
         <tbody>
+            <tr *ngIf="users.length == 0">
+                <td colspan="4" style="text-align: center"> No Data Found. </td>
+            </tr>
             <tr *ngFor="let user of users; index as i">
                 <th scope="row">{{i+1}}</th>
                 <td>

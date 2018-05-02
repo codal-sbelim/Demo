@@ -1,0 +1,18 @@
+url = this.getUrl(path, queryParameters);
+
+requestOptionArgs = {
+    headers: headers,
+    observe: 'response'
+};
+
+return this.http.{{#getLowercaseMethod}}{{/getLowercaseMethod}}(url,{{#parameters}}{{#isBodyParameter}}body,{{/isBodyParameter}}{{/parameters}}requestOptionArgs)
+{{#hasResponseBody}}
+    .map((res:Response) => {
+        if (res.headers.get('content-type').match(/csv/)) {
+            return new Blob([res.text()], {type: 'text/csv'});
+        } else {
+            return res;
+        }
+    })
+{{/hasResponseBody}}
+.catch(this.handleError);

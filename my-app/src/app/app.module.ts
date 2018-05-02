@@ -20,7 +20,11 @@ import { ListComponent } from './list/list.component';
 import { DetailComponent } from './detail/detail.component';
 
 import { UserService } from './users.service';
+import { CustomerService } from './customer.service';
 import { AddEditComponent } from './add-edit/add-edit.component';
+
+import { APP_INT_PROVIDERS } from '../common/swagger-providers/integration-api.provider';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -38,14 +42,12 @@ import { AddEditComponent } from './add-edit/add-edit.component';
     ReactiveFormsModule, // For Reactive forms
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemUsersService, { dataEncapsulation: false }
-    ),
+    environment.isMemoryCacheAPIEnable ? HttpClientInMemoryWebApiModule.forRoot(InMemUsersService, { dataEncapsulation: false }) : [],
     Angular2FontawesomeModule,
     SimpleNotificationsModule.forRoot({ position: ['top', 'right'] }),
-    NgProgressModule.forRoot()
+    NgProgressModule.forRoot(),
   ],
-  providers: [UserService],
+  providers: [UserService, APP_INT_PROVIDERS, CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
